@@ -171,6 +171,6 @@ print(matrix_mult_kernel.inspect_ptx(sig))
 ## Referencias (documentación)
 
 ```text
-Numba CUDA (docs): https://numba.pydata.org/numba-doc/latest/cuda/index.html
+Numba CUDA (docs): https://numba.readthedocs.io/en/stable/
 NVIDIA PTX ISA:    https://docs.nvidia.com/cuda/parallel-thread-execution/index.html
 ```
