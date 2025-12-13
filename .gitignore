@@ -1,0 +1,79 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.pycache/
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Packaging / build
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Jupyter / IPython
+.ipynb_checkpoints/
+.ipython/
+
+# Type checkers / linters
+.mypy_cache/
+.pyre/
+.ruff_cache/
+.pytype/
+
+# Coverage
+.coverage
+coverage.xml
+htmlcov/
+
+# Logs
+*.log
+
+# =========================
+# OS / Editors
+# =========================
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/
+
+# JetBrains
+.idea/
+
+# Vim
+*~
+*.swp
+*.swo
+
+# =========================
+# Project-specific
+# =========================
+# CUDA / Numba caches
+numba_cache/
+.nv/
+*.ptx
+*.cubin
+*.fatbin
+
+# Outputs / benchmarks (si generas archivos)
+output/
+outputs/
+results/
+tmp/
+temp/
+
+# Local environment files
+.env
+.env.*

@@ -8,12 +8,16 @@ El objetivo del demo es hacer explícito:
 - **GPU (paralelo):** esos índices del bucle se mapean a **coordenadas de hilos** con `cuda.grid(2)`.
 - **Compilación JIT:** la **primera** ejecución en GPU paga el costo de **compilar** el kernel (generando código PTX). Las siguientes ejecuciones reutilizan lo ya compilado para la misma firma de tipos.
 
+
+---
+# ¡ IMPORTANTE !
+> Si no se cuenta con una GPU NVIDIA local, se puede ejecutar el proyecto en **Google Colab**: descargar y comprimir el proyecto como **ZIP**, súbirlo a Colab, **descomprímelo** y ejecutar el script activando un entorno con **GPU (T4)** (Instrucciones complestas abajo).
 ---
 
 ## Estructura del repositorio
 
 ```text
-Compilador_GPU/
+CompilacionGPU/
 ├── README.md
 ├── requerimientos.txt
 ├── scripts/
@@ -27,36 +31,60 @@ Compilador_GPU/
         ├── kernels.py    # kernels CUDA (Numba @cuda.jit)
         ├── main.py       # flujo principal del demo (CPU vs GPU, prints)
         └── ops.py        # operaciones CPU (referencia secuencial)
-```
+````
 
 ---
 
 ## Requisitos
 
-- **Python 3.10–3.12** (probado con 3.11)
-- **GPU NVIDIA** con **drivers** instalados (CUDA Driver)
-  - Si no hay GPU disponible, el programa **corre en CPU** y lo indica.
+* **Python 3.10–3.12** (probado con 3.11)
+* **GPU NVIDIA** con **drivers** instalados (CUDA Driver)
 
-### Dependencias
+  * Si no hay GPU disponible, el programa **corre en CPU** y lanza un **error para de GPU**.
+
+### Entorno virtual (Linux Debian/Ubuntu y derivados)
+
+En estos sistemas, `pip` puede bloquear instalaciones globales por **PEP 668** (`externally-managed-environment`).
+Por lo tanto, este proyecto se instala y ejecuta **solo dentro de un `venv`**.
+
+---
+
+## Dependencias
 
 El archivo `requerimientos.txt` incluye:
 
-- `numba`
-- `numpy`
+* `numba`
+* `numpy`
 
-Instalación:
+> No se recomienda instalar dependencias “globales” con `pip` en Linux.
+
+---
+
+## Instalación
+
+### Linux/macOS (venv obligatorio)
 
 ```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
 pip install -r requerimientos.txt
-````
+```
 
-> En Debian/Ubuntu puede aparecer el error `externally-managed-environment`. En ese caso usa un entorno virtual (abajo hay ejemplos).
+### Windows PowerShell
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\activate
+python -m pip install --upgrade pip
+pip install -r requerimientos.txt
+```
 
 ---
 
 ## Ejecución rápida
 
-Desde la raíz del repo:
+Desde la raíz del repo (con el `venv` activo):
 
 ```bash
 python src/run.py 1024
@@ -92,27 +120,23 @@ La **primera corrida** suele ser más lenta del lado GPU por el costo de **compi
 
 ---
 
-## Instalación recomendada (Linux/macOS)
+## Ejecutar en Google Colab (sin GPU NVIDIA local)
+
+1. En Colab ve a: `Entorno de ejecución → Cambiar tipo de entorno de ejecución`
+
+   * **Acelerador por hardware:** `GPU` (por ejemplo **T4**)
+
+2. Sube el proyecto como `.zip` (desde el panel de archivos) y descomprímelo.
+   Luego, en una celda:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install --upgrade pip
-pip install -r requerimientos.txt
-python src/run.py 1024
+!unzip -q CompilacionGPU.zip -d CompilacionGPU
+%cd CompilacionGPU
+!pip -q install -r requerimientos.txt
+!python src/run.py 1024
 ```
 
----
-
-## Instalación recomendada (Windows PowerShell)
-
-```powershell
-py -m venv .venv
-.\.venv\Scripts\activate
-python -m pip install --upgrade pip
-pip install -r requerimientos.txt
-python src\run.py 1024
-```
+> Si el nombre del zip/carpeta cambia, se debe ajsutar `CompilacionGPU.zip` y/o la ruta del `cd`.
 
 ---
 
@@ -124,7 +148,7 @@ Causas típicas:
 * Estás en una VM sin passthrough de GPU
 * Estás en WSL sin configuración de CUDA para WSL
 
-Alternativa rápida: ejecutar en **Google Colab** con runtime de GPU (solo instalas `numba` y `numpy`).
+Alternativa rápida: usar **Google Colab** (sección anterior) con GPU T4.
 
 ---
 
@@ -150,4 +174,3 @@ print(matrix_mult_kernel.inspect_ptx(sig))
 Numba CUDA (docs): https://numba.pydata.org/numba-doc/latest/cuda/index.html
 NVIDIA PTX ISA:    https://docs.nvidia.com/cuda/parallel-thread-execution/index.html
 ```
-
