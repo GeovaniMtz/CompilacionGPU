@@ -146,3 +146,16 @@ La **primera ejecución** puede ser más lenta del lado GPU por el costo de **co
 Numba CUDA (docs): https://numba.readthedocs.io/en/stable/
 NVIDIA PTX ISA:    https://docs.nvidia.com/cuda/parallel-thread-execution/index.html
 ```
+
+---
+
+
+### Colaboradores
+
+
+* Mendiola Gutiérrez Francisco Javier
+* Flores Linares Oscar Daniel
+* Martinez Martinez Geovani
+* Ortiz Ménez Victor Gael
+
+
